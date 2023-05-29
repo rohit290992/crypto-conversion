@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+</head>
+<body>
+<h2>Welcome, <span th:text="${username}"></span>!</h2>
+
+<form action="#" th:action="@{/logout}" method="post">
+  <button type="submit">Logout</button>
+</form>
+
+<h3>Select Cryptocurrency:</h3>
+<select name="cryptocurrency" id="cryptocurrency">
+  <option th:each="crypto : ${cryptocurrencies}" th:value="${crypto.id}" th:text="${crypto.name}"></option>
+</select>
+
+<h3>Enter IP Address:</h3>
+<input type="text" name="ipAddress" id="ipAddress" placeholder="Enter IP address">
+
+<button type="button" onclick="fetchLocalizedPrice()">Fetch Price</button>
+
+<p>Current localized price of cryptocurrency: <span id="symbol"></span> <span id="localizedPrice"></span></p>
+
+<button id="loadConversionHistory" type="button">Load Conversion History</button>
+
+<table id="conversionHistoryTable">
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Cryptocurrency</th>
+    <th>Price</th>
+    <th>Currency</th>
+  </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+  function fetchLocalizedPrice() {
+    var selectedCrypto = document.getElementById("cryptocurrency").value;
+    var ipAddress = document.getElementById("ipAddress").value;
+
+    // Make an AJAX request to fetch the localized price based on the selected cryptocurrency and IP address
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/price?crypto=" + selectedCrypto + "&ip=" + ipAddress, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const conversionResponse = JSON.parse(xhr.responseText);
+        document.getElementById("localizedPrice").innerText = conversionResponse.price;
+        document.getElementById("symbol").innerText = conversionResponse.currencySymbol;
+      }
+    };
+    xhr.send();
+  }
+</script>
+
+<script th:inline="javascript">
+  document.getElementById('loadConversionHistory').addEventListener('click', function() {
+    fetch('/history')
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              var tableBody = document.getElementById('conversionHistoryTable').getElementsByTagName('tbody')[0];
+              tableBody.innerHTML = ''; // Clear the table body
+
+              data.forEach(function(conversion) {
+                var row = tableBody.insertRow();
+
+                var dateCell = row.insertCell();
+                dateCell.textContent = conversion.localDateTime;
+
+                var cryptocurrencyCell = row.insertCell();
+                cryptocurrencyCell.textContent = conversion.cryptoCurrency;
+
+                var priceCell = row.insertCell();
+                priceCell.textContent = conversion.price;
+
+                var currencyCell = row.insertCell();
+                currencyCell.textContent = conversion.currencySymbol;
+              });
+            })
+            .catch(function(error) {
+              console.error(error);
+            });
+  });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
