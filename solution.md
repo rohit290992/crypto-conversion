@@ -32,9 +32,7 @@ This is a Java web application that allows users to fetch the current localized 
 ### Installation
 
 1. Clone the repository:
-
-git clone https://github.com/rohit290992/crypto-conversion.git
-cd your-repo
+ git clone https://github.com/rohit290992/crypto-conversion.git
 
 2. Build the application:
    mvn clean install
