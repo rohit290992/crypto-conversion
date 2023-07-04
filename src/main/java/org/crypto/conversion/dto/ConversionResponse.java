@@ -3,6 +3,8 @@ package org.crypto.conversion.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+// Some unused methods
+// Also, you can use Lombok to avoid lots of boilerplate code
 public class ConversionResponse {
     private BigDecimal price;
     private String currencySymbol;

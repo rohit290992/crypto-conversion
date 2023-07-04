@@ -41,16 +41,20 @@ public class CryptoCurrency {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+        // o can be an instance of a class that is a descendednt of this class
+        // See here https://www.baeldung.com/java-equals-hashcode-contracts#1-overriding-equals
         if (o == null || getClass() != o.getClass()) return false;
 
         CryptoCurrency that = (CryptoCurrency) o;
 
+        // id can be null --> NPE
         if (!id.equals(that.id)) return false;
         return name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
+        // id can be null --> NPE
         int result = id.hashCode();
         result = 31 * result + name.hashCode();
         return result;

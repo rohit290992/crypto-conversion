@@ -43,6 +43,7 @@ public class ConversionService {
         // Make the API request to CoinGecko to fetch the current price
         ResponseEntity<Map<String, Map<String, BigDecimal>>> response = cryptoProviderClient.cryptoToLocalCurrencyValue(cryptoId, currency);
         ConversionResponse conversionResponse = new ConversionResponse(
+                // requireNonNull can throw NPE
                 Objects.requireNonNull(response.getBody()).get(cryptoId).get(currencyString.toLowerCase()),
                 currency.getSymbol(Locale.getDefault()), cryptoId, LocalDateTime.now());
         conversionHistoryService.addConversionToHistory(username,conversionResponse);

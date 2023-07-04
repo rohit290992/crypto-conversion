@@ -19,6 +19,8 @@ import java.util.Map;
 @Component
 public class CryptoProviderClient {
 
+    // currencyListCache can be final
+    // also, you can use more advanced data structures like Guava Cache
     private static List<CryptoCurrency> currencyListCache = new ArrayList<>();
     private final RestTemplate restTemplate;
 
@@ -27,15 +29,21 @@ public class CryptoProviderClient {
         this.restTemplate = restTemplate;
     }
 
+    // Try using a DTO class instead of Map<String, Map<String, BigDecimal>>
     public ResponseEntity<Map<String, Map<String, BigDecimal>>> cryptoToLocalCurrencyValue(String cryptoId, Currency currency) {
+        // Do not hard-code constants
         String urlForCrypto = "https://api.coingecko.com/api/v3/simple/price?ids=" + cryptoId + "&vs_currencies=" + currency + "&precision=2";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        // This can be a static field of the class
         ParameterizedTypeReference<Map<String, Map<String, BigDecimal>>> responseType =
                 new ParameterizedTypeReference<>() {
                 };
+
+        // This can be simplified to "return restTemplate.exchange(...)
         ResponseEntity<Map<String, Map<String, BigDecimal>>> response =
                 restTemplate.exchange(urlForCrypto, HttpMethod.GET, entity, responseType);
         return response;
@@ -58,6 +66,8 @@ public class CryptoProviderClient {
         String url = "https://api.coingecko.com/api/v3/coins/list";
         ResponseEntity<List<CryptoCurrency>> response =
                 restTemplate.exchange(url, HttpMethod.GET, null, responseType);
+        // getBody() can be null, but addAll() accepts a non-null param
+        // As such, it can result in NPE
         currencyListCache.addAll(response.getBody());
         return response.getBody();
     }
