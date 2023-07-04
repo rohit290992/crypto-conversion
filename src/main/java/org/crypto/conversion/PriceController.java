@@ -29,6 +29,8 @@ public class PriceController {
 
     @GetMapping("/")
     public String showHomePage(Model model, HttpSession session) {
+        // Each request is handled by a separate thread
+        // Accessing shared object "session" from multiple threads can result in race conditions
         if (session.getAttribute("username") == null) {
             return "redirect:/login";
         }
@@ -67,7 +69,7 @@ public class PriceController {
 
     @GetMapping("/history")
     public ResponseEntity<List<ConversionResponse>> getHistory(HttpSession session) {
-
+        // Try not to have long lines :)
         return ResponseEntity.ok(conversionHistoryService.getAllConversionHistory(session.getAttribute("username").toString()));
     }
 }

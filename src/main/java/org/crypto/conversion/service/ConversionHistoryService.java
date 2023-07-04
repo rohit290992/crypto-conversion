@@ -1,6 +1,6 @@
 package org.crypto.conversion.service;
 
-import org.crypto.conversion.dto.Conversion;
+import org.crypto.conversion.dto.Conversion; // <-- Unused import
 import org.crypto.conversion.dto.ConversionResponse;
 
 import java.util.List;

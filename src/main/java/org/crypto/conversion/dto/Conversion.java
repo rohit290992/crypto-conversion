@@ -10,6 +10,8 @@ public class Conversion {
 
     private double localizedPrice;
 
+    // Below methods are not used
+
     public String getCurrency() {
         return currency;
     }

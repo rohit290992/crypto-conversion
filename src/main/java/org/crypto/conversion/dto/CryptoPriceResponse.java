@@ -2,6 +2,7 @@ package org.crypto.conversion.dto;
 
 import java.math.BigDecimal;
 
+// According to IntelliJ, this class is not used
 public class CryptoPriceResponse {
     private CryptoCode cryptoCode;
     // Constructors, getters, and setters
@@ -24,6 +25,7 @@ public class CryptoPriceResponse {
 
 }
 
+// Two methods in this class are unused
 class CryptoCode {
     private BigDecimal localCurrency;
 

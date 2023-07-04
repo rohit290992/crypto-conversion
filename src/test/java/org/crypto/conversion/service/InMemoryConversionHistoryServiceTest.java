@@ -65,6 +65,8 @@ class InMemoryConversionHistoryServiceTest {
         List<ConversionResponse> conversionHistory = conversionHistoryService.getAllConversionHistory(username);
 
         // Then
+        // You can use Hamcrest matchers: assertThat(X).hasSize(2)
+        // They are known to provide much more descriptive test results in case of failures
         assertNotNull(conversionHistory);
         assertEquals(2, conversionHistory.size());
         assertTrue(conversionHistory.contains(existingConversion));

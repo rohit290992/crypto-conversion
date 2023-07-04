@@ -1,3 +1,9 @@
+// It's good to name this file as README.MD
+// This way, GitHub shows it upon opening the repo.
+
+// Also, for interviews, try to achieve 100% test coverage
+
+
 # Crypto Conversion Web Application
 
 This is a Java web application that allows users to fetch the current localized price of a cryptocurrency based on their IP address. The application provides a user interface where users can select a cryptocurrency and enter an optional IP address to retrieve the price in their local currency.

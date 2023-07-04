@@ -44,6 +44,7 @@ class CryptoProviderClientTest {
         Currency currency = Currency.getInstance("EUR");
 
         String expectedUrl = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=EUR&precision=2";
+        // Contents of collection 'expectedHeaders' are updated, but never queried
         HttpHeaders expectedHeaders = new HttpHeaders();
         expectedHeaders.set("Content-Type", "application/json");
 
